@@ -15,19 +15,21 @@ namespace MyFirstWebApp.Servises
             _logger = logger;
         }
 
-        public async Task<string> GetRandomJoke()
+        public async Task<DadJoke> GetRandomJoke() => await GetDadJoke();
+
+        public async Task<DadJoke> GetJokeById(string jokeId) => await GetDadJoke(jokeId);
+
+        public async Task<DadJoke[]> GetNumberOfRandomJokes(int quantity)
         {
-            var joke = await GetDadJoke();
+            var jokeArray = new DadJoke[quantity];
 
-            return joke.Joke;
-        } 
+            for(int i = 0; i < quantity; i++)
+            {
+                jokeArray[i] = await GetRandomJoke();
+            }
 
-        public async Task<string> GetJoke(string jokeId)
-        {
-            var joke = await GetDadJoke(jokeId);
-
-            return joke.Joke;
-        }
+            return jokeArray;
+        }        
 
         private async Task<DadJoke> GetDadJoke(string id = "")
         {

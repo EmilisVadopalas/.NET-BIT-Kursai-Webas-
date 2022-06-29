@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
 
@@ -10,11 +11,13 @@ builder.Host.ConfigureServices((host, services) =>
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
-{
+{   
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }

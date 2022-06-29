@@ -1,9 +1,13 @@
-﻿namespace MyFirstWebApp.Servises.Contracts
+﻿using MyFirstWebApp.Classes.Joke;
+
+namespace MyFirstWebApp.Servises.Contracts
 {
     public interface IJokeServise
     {
-        public Task<string> GetRandomJoke();
+        public Task<DadJoke> GetRandomJoke();
 
-        public Task<string> GetJoke(string jokeId);
+        public Task<DadJoke> GetJokeById(string jokeId = "");
+
+        public Task<DadJoke[]> GetNumberOfRandomJokes(int quantity);
     }
 }
