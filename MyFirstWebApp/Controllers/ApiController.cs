@@ -31,6 +31,6 @@ namespace MyFirstWebApp.Controllers
         public async Task<string> Jokes()
         {
             return JsonSerializer.Serialize(await _jokeServise.GetRandomJoke());
-        }
+        }        
     }
 }
