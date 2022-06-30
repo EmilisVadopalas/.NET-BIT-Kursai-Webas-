@@ -4,6 +4,7 @@ using MyFirstWebApp.Servises.Contracts;
 
 namespace MyFirstWebApp.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class PaskaitosController : Controller
     {        
         private readonly IJokeServise _jokeServise;
