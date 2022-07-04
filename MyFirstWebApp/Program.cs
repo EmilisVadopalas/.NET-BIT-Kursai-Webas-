@@ -1,3 +1,5 @@
+
+
 using Microsoft.OpenApi.Models;
 using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
@@ -8,6 +10,7 @@ builder.Host.ConfigureServices((host, services) =>
 {
     services.AddSingleton<ILoggerServise, LoggerServise>();
     services.AddTransient<IJokeServise, JokeServise>();
+    services.AddScoped<ITopoProccessorsServise, TopoProccessorsServise>();
 });
 
 builder.Services.AddControllersWithViews();
@@ -22,7 +25,7 @@ builder.Services.AddSwaggerGen(x =>
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
-{   
+{
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
