@@ -1,6 +1,8 @@
 ﻿using HtmlAgilityPack;
+using HtmlAgilityPack.CssSelectors.NetCore;
 using MyFirstWebApp.Classes.Processors;
 using MyFirstWebApp.Servises.Contracts;
+using PuppeteerSharp;
 
 namespace MyFirstWebApp.Servises
 {
@@ -118,7 +120,6 @@ namespace MyFirstWebApp.Servises
                 "var fullLength = window.scrollTo(0, window.document.body.scrollHeight); ");
 
             return await page.GetContentAsync();
-
         }
     }
 
