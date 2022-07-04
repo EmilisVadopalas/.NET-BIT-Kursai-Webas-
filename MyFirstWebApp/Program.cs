@@ -1,13 +1,24 @@
 
 
 using Microsoft.OpenApi.Models;
+using MyFirstWebApp.Database;
 using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
+   
+builder.Host.ConfigureAppConfiguration(app => app.AddJsonFile("appsettings.json"));
 
 builder.Host.ConfigureServices((host, services) =>
 {
+    var config = host.Configuration;
+
+    services.AddDbContext<WebDatabaseContext>();
+
+    services.AddHostedService<BackgroundScrapperServise>();
+    services.AddSingleton<BackgroundScrapperServise>();
+    //services.AddSingleton<IHostedService, BackgroundService>(sp => sp.GetService<BackgroundService>());
+      
     services.AddSingleton<ILoggerServise, LoggerServise>();
     services.AddTransient<IJokeServise, JokeServise>();
     services.AddScoped<ITopoProccessorsServise, TopoProccessorsServise>();

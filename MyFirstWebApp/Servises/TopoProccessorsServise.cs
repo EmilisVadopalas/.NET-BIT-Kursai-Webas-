@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using MyFirstWebApp.Classes.Processors;
+using MyFirstWebApp.Database;
 using MyFirstWebApp.Servises.Contracts;
 using PuppeteerSharp;
 
@@ -8,11 +9,30 @@ namespace MyFirstWebApp.Servises
 {
     public class TopoProccessorsServise : ITopoProccessorsServise
     {
+        private readonly WebDatabaseContext _dbContext;
+
         private string _topoCentrasProcesorsBaseUrl = @"https://www.topocentras.lt/kompiuteriai-ir-plansetes/kompiuteriu-komponentai/procesoriai.html";
         private int _itemsInPage = 20;
         private string _topoCentrasLimit = @$"?limit=";
         private string _topoCentrasPage = @"&p=";
 
+        public TopoProccessorsServise(WebDatabaseContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public List<ProcessorListing> GetProcessorsFromDB()
+        {
+            var processors = _dbContext.Processors.ToList();
+            var processorsListing = new List<ProcessorListing>();
+
+            foreach(var processor in processors)
+            {
+                processorsListing.Add(new ProcessorListing(processor));
+            }
+
+            return processorsListing;
+        }
 
         public async Task<List<ProcessorListing>> ScrapeTopoProcesors()
         {
@@ -111,16 +131,16 @@ namespace MyFirstWebApp.Servises
             });
 
             using var page = await browser.NewPageAsync();
-            await page.SetViewportAsync(new ViewPortOptions { Width = 1300, Height = 1000 });
+
+            await page.SetViewportAsync(new ViewPortOptions { Width = 1300, Height = 8000 });
             await page.GoToAsync(url, new NavigationOptions { WaitUntil = new WaitUntilNavigation[] { WaitUntilNavigation.Load } });
 
-            await page.EvaluateExpressionAsync(" window.scrollTo(0, 0); ");
-            await page.EvaluateExpressionAsync("" +
-                "var x = 0;" +
-                "var fullLength = window.scrollTo(0, window.document.body.scrollHeight); ");
+            //await page.EvaluateExpressionAsync(" window.scrollTo(0, 0); ");
+            //await page.EvaluateExpressionAsync("" +
+            //    "var x = 0;" +
+            //    "var fullLength = window.scrollTo(0, window.document.body.scrollHeight); ");
 
             return await page.GetContentAsync();
         }
     }
-
 }

@@ -55,6 +55,13 @@ namespace MyFirstWebApp.Controllers
             return View(new ProccessorsModel(porcessors));
         }
 
+        [Route("/Paskaitos/ProcessorsDb")]
+        public IActionResult Processors(object ok)
+        {
+            var porcessors = _topoProccessorsServise.GetProcessorsFromDB();
+            return View(new ProccessorsModel(porcessors));
+        }
+
         [Route("/Paskaitos/Processors/Page/{page}")]
         public async Task<IActionResult> Processors(int page)
         {

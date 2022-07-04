@@ -1,4 +1,6 @@
-﻿namespace MyFirstWebApp.Classes.Processors
+﻿using MyFirstWebApp.Database.Entities;
+
+namespace MyFirstWebApp.Classes.Processors
 {
     public class ProcessorListing
     {
@@ -21,6 +23,14 @@
             {
                 Price = -1;
             }
+        }
+
+        public ProcessorListing(Processor proc)
+        {
+            Name = proc.Name;
+            PictureUrl = proc.PictureUrl;
+            ProductLink = proc.ProductLink;
+            Price = proc.Price;
         }
     }
 }
