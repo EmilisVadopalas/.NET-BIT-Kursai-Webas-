@@ -111,7 +111,7 @@ namespace MyFirstWebApp.Servises
                 var price = element.QuerySelector(".Price-price-27p").InnerText;
                 var name = element.QuerySelector(".ProductGridItem-productName-3ZD").InnerText;
                 var pictureUrl = element.QuerySelector(".ProductGridItem-imageContainer-pMi").FirstChild.GetAttributeValue("src", string.Empty);
-                var productLink = element.QuerySelector(".ProductGridItem-link-3xD")?.FirstChild?.GetAttributeValue<string>("href", "#") ?? "#";
+                var productLink = $"https://www.topocentras.lt{element.QuerySelector(".ProductGridItem-link-3xD")?.GetAttributeValue<string>("href", "#") ?? "#"}";
 
                 var processorListing = new ProcessorListing(name, pictureUrl, price, productLink);
 
@@ -134,11 +134,6 @@ namespace MyFirstWebApp.Servises
 
             await page.SetViewportAsync(new ViewPortOptions { Width = 1300, Height = 8000 });
             await page.GoToAsync(url, new NavigationOptions { WaitUntil = new WaitUntilNavigation[] { WaitUntilNavigation.Load } });
-
-            //await page.EvaluateExpressionAsync(" window.scrollTo(0, 0); ");
-            //await page.EvaluateExpressionAsync("" +
-            //    "var x = 0;" +
-            //    "var fullLength = window.scrollTo(0, window.document.body.scrollHeight); ");
 
             return await page.GetContentAsync();
         }

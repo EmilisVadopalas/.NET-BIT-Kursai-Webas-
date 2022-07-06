@@ -40,7 +40,7 @@ namespace MyFirstWebApp.Servises
         {
             using var scope = _scopeFactory.CreateAsyncScope();
             var dbContext = (WebDatabaseContext)scope.ServiceProvider.GetRequiredService(typeof(WebDatabaseContext));
-            var processorServise = (ITopoProccessorsServise)scope.ServiceProvider.GetService(typeof(ITopoProccessorsServise));
+            var processorServise = (ITopoProccessorsServise)scope.ServiceProvider.GetRequiredService(typeof(ITopoProccessorsServise));
 
             if (processorServise != null)
             {

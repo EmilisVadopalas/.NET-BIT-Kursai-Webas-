@@ -16,9 +16,8 @@ builder.Host.ConfigureServices((host, services) =>
     services.AddDbContext<WebDatabaseContext>();
 
     services.AddHostedService<BackgroundScrapperServise>();
-    services.AddSingleton<BackgroundScrapperServise>();
-    //services.AddSingleton<IHostedService, BackgroundService>(sp => sp.GetService<BackgroundService>());
-      
+    services.AddSingleton<BackgroundScrapperServise>();   
+
     services.AddSingleton<ILoggerServise, LoggerServise>();
     services.AddTransient<IJokeServise, JokeServise>();
     services.AddScoped<ITopoProccessorsServise, TopoProccessorsServise>();

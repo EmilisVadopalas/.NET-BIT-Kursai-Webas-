@@ -24,7 +24,7 @@ namespace MyFirstWebApp.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Processor>(b => b.HasKey(k => k.Id));
+           
         }
     }
 }
