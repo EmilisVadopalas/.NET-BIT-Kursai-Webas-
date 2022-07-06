@@ -1,7 +1,23 @@
-﻿@{
+﻿@model ProccessorsModel
+
+@{
     ViewData["Title"] = "Processors";
 }
 
-<h1>Processors</h1>
-
-<p>This is where we will show Processors scrapped from TopoCentras</p>
+<div class="container">
+  <div class="row">
+    @{
+        foreach(var processor in Model.Processors)
+        {
+            <div class="card">
+                <img src="@processor.PictureUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">@processor.Name</h5>
+                  <p class="card-text">@processor.Price Eur.</p>
+                  <a href="@processor.ProductLink" class="btn btn-primary">Go to Seller</a>
+                </div>
+            </div>
+        }
+    }
+    </div>
+</div>

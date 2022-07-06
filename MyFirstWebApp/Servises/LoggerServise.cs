@@ -51,4 +51,5 @@ namespace MyFirstWebApp.Servises
         private void CreateFolderOrDefault() =>
                 Directory.CreateDirectory(_logsDirectory);
     }
+
 }

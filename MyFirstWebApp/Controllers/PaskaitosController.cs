@@ -1,17 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFirstWebApp.Models;
+using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
 
 namespace MyFirstWebApp.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class PaskaitosController : Controller
-    {        
+    {
         private readonly IJokeServise _jokeServise;
+        private readonly ITopoProccessorsServise _topoProccessorsServise;
+        private readonly IBookServise _bookServise;
 
-        public PaskaitosController(IJokeServise jokeServise)
+        public PaskaitosController(
+            IJokeServise jokeServise,
+            ITopoProccessorsServise topoProccessorsServise,
+            IBookServise bookServise)
         {
             _jokeServise = jokeServise;
+            _topoProccessorsServise = topoProccessorsServise;
+            _bookServise = bookServise;
         }
 
         public IActionResult Index()
@@ -44,14 +52,30 @@ namespace MyFirstWebApp.Controllers
             return View(new JokeModel(await _jokeServise.GetRandomJoke()));
         }
 
-        public IActionResult Processors()
+        [Route("/Paskaitos/Processors")]
+        public async Task<IActionResult> Processors()
         {
-            return View();
+            var porcessors = await _topoProccessorsServise.ScrapeTopoProcesorsFirstPage();
+            return View(new ProccessorsModel(porcessors));
         }
 
-        public IActionResult Books()
+        [Route("/Paskaitos/ProcessorsDb")]
+        public IActionResult Processors(object _)
         {
-            return View();
+            var porcessors = _topoProccessorsServise.GetProcessorsFromDB();
+            return View(new ProccessorsModel(porcessors));
+        }
+
+        [Route("/Paskaitos/Processors/Page/{page}")]
+        public async Task<IActionResult> Processors(int page)
+        {
+            return View(new ProccessorsModel(await _topoProccessorsServise.ScrapeTopoProcesorsPage(page)));
+        }
+
+        [Route("/Paskaitos/Books/{author}")]
+        public async Task<IActionResult> Books(string author)
+        {
+            return View(new BookModel(await _bookServise.SearchBooksByAuthor(author), author));
         }
     }
 }

@@ -332,6 +332,12 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+#Ignore Chromium
+.local-chromium/*
+.local-chromium/
+/.local-chromium/*
+/.local-chromium/
+
 # OpenCover UI analysis results
 OpenCover/
 
