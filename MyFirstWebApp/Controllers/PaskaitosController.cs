@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyFirstWebApp.Models;
+using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
 
 namespace MyFirstWebApp.Controllers
@@ -9,13 +10,16 @@ namespace MyFirstWebApp.Controllers
     {
         private readonly IJokeServise _jokeServise;
         private readonly ITopoProccessorsServise _topoProccessorsServise;
+        private readonly IBookServise _bookServise;
 
         public PaskaitosController(
             IJokeServise jokeServise,
-            ITopoProccessorsServise topoProccessorsServise)
+            ITopoProccessorsServise topoProccessorsServise,
+            IBookServise bookServise)
         {
             _jokeServise = jokeServise;
             _topoProccessorsServise = topoProccessorsServise;
+            _bookServise = bookServise;
         }
 
         public IActionResult Index()
@@ -68,9 +72,10 @@ namespace MyFirstWebApp.Controllers
             return View(new ProccessorsModel(await _topoProccessorsServise.ScrapeTopoProcesorsPage(page)));
         }
 
-        public IActionResult Books()
+        [Route("/Paskaitos/Books/{author}")]
+        public async Task<IActionResult> Books(string author)
         {
-            return View();
+            return View(new BookModel(await _bookServise.SearchBooksByAuthor(author), author));
         }
     }
 }

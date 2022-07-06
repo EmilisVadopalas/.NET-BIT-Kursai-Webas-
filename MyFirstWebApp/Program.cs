@@ -20,6 +20,7 @@ builder.Host.ConfigureServices((host, services) =>
 
     services.AddSingleton<ILoggerServise, LoggerServise>();
     services.AddTransient<IJokeServise, JokeServise>();
+    services.AddScoped<IBookServise, BookServise>();
     services.AddScoped<ITopoProccessorsServise, TopoProccessorsServise>();
 });
 
