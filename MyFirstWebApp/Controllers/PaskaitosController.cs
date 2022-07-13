@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyFirstWebApp.Classes.Processors;
 using MyFirstWebApp.Models;
 using MyFirstWebApp.Servises;
 using MyFirstWebApp.Servises.Contracts;
@@ -11,15 +12,18 @@ namespace MyFirstWebApp.Controllers
         private readonly IJokeServise _jokeServise;
         private readonly ITopoProccessorsServise _topoProccessorsServise;
         private readonly IBookServise _bookServise;
+        private readonly ILoggerServise _loggerServise;
 
         public PaskaitosController(
             IJokeServise jokeServise,
             ITopoProccessorsServise topoProccessorsServise,
-            IBookServise bookServise)
+            IBookServise bookServise,
+            ILoggerServise loggerServise)
         {
             _jokeServise = jokeServise;
             _topoProccessorsServise = topoProccessorsServise;
             _bookServise = bookServise;
+            _loggerServise = loggerServise;
         }
 
         public IActionResult Index()
@@ -49,14 +53,33 @@ namespace MyFirstWebApp.Controllers
 
         public async Task<IActionResult> Jokes()
         {
+            //await _loggerServise.LogError("testas /Paskaitos/Joikoes");
+
             return View(new JokeModel(await _jokeServise.GetRandomJoke()));
         }
 
         [Route("/Paskaitos/Processors")]
         public async Task<IActionResult> Processors()
         {
-            var porcessors = await _topoProccessorsServise.ScrapeTopoProcesorsFirstPage();
-            return View(new ProccessorsModel(porcessors));
+            //await _loggerServise.LogError("testas /Paskaitos/Processors");
+
+            List<ProcessorListing> processors;
+
+            try
+            {
+                processors = await _topoProccessorsServise.ScrapeTopoProcesorsFirstPage();
+                //throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+               // await _loggerServise.LogError(ex.Message);
+               // await _loggerServise.LogError(ex.Source);
+               // await _loggerServise.LogError(ex.StackTrace);
+
+                return View("Views/Shared/Error.cshtml", new ErrorViewModel(ex.Message, ex.StackTrace));
+            }
+            
+            return View(new ProccessorsModel(processors));
         }
 
         [Route("/Paskaitos/ProcessorsDb")]

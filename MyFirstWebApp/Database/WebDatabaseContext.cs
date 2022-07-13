@@ -7,11 +7,20 @@ namespace MyFirstWebApp.Database
     {
         private IConfiguration _configuration;
 
-        public DbSet<Processor> Processors { get; set; }
-
         public WebDatabaseContext(IConfiguration configuration)
         {
             _configuration = configuration;
+        }
+
+
+        public DbSet<Processor> Processors { get; set; }
+        public DbSet<ApiProcessor> ApiProcessors { get; set; }
+        public DbSet<ApiSeller> apiSellers { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,11 +29,6 @@ namespace MyFirstWebApp.Database
             {
                 optionsBuilder.UseSqlServer(_configuration.GetConnectionString("WebConnection"));
             }
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-           
-        }
+        }       
     }
 }
