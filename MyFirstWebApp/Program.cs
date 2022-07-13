@@ -22,6 +22,7 @@ builder.Host.ConfigureServices((host, services) =>
     services.AddTransient<IJokeServise, JokeServise>();
     services.AddScoped<IBookServise, BookServise>();
     services.AddScoped<ITopoProccessorsServise, TopoProccessorsServise>();
+    services.AddScoped<IApiProcessorsServise, ApiProcessorsServise>();
 });
 
 builder.Services.AddControllersWithViews();

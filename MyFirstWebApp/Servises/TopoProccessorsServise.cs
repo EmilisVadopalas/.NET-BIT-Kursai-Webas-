@@ -10,6 +10,7 @@ namespace MyFirstWebApp.Servises
     public class TopoProccessorsServise : ITopoProccessorsServise
     {
         private readonly WebDatabaseContext _dbContext;
+        private readonly ILoggerServise _loggerServise;
 
         private string _topoCentrasProcesorsBaseUrl = @"https://www.topocentras.lt/kompiuteriai-ir-plansetes/kompiuteriu-komponentai/procesoriai.html";
         private int _itemsInPage = 20;

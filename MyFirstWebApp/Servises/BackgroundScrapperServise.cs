@@ -20,7 +20,7 @@ namespace MyFirstWebApp.Servises
 
         public Task StartAsync(CancellationToken token)
         {
-            _timer = new Timer(async (state) => await RefreshProcessors(), null, TimeSpan.Zero, TimeSpan.FromMinutes(_runEveryMinutes));
+            //_timer = new Timer(async (state) => await RefreshProcessors(), null, TimeSpan.Zero, TimeSpan.FromMinutes(_runEveryMinutes));
 
             return Task.CompletedTask;
         }
